@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Recarga $50 Gratis — Telcel x Elektra</title>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nunito:wght@400;600;700;900&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --telcel-blue: #0033A0;
+      --elektra-yellow: #FFD700;
+      --elektra-red: #CC0000;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body,
+    html {
+      height: 100dvh;
+      width: 100vw;
+      overflow: hidden;
+      /* NADA debe quedar fuera de la pantalla ni requerir scroll */
+      font-family: 'Nunito', sans-serif;
+      background: #000;
+      color: #1a1a2e;
+    }
+
+    #app-container {
+      width: 100%;
+      height: 100dvh;
+      max-width: 480px;
+      margin: 0 auto;
+      background: linear-gradient(160deg, var(--telcel-blue) 0%, #001f6e 60%, #0a0a1a 100%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    #app-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 20%, rgba(255, 215, 0, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 10% 80%, rgba(0, 85, 204, 0.3) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Animated background dots */
+    .bg-dots {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-dots span {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 215, 0, 0.07);
+      animation: floatDot 8s ease-in-out infinite;
+    }
+
+    .bg-dots span:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      top: -80px;
+      right: -60px;
+      animation-delay: 0s;
+    }
+
+    .bg-dots span:nth-child(2) {
+      width: 180px;
+      height: 180px;
+      bottom: 100px;
+      left: -40px;
+      animation-delay: 2s;
+    }
+
+    .bg-dots span:nth-child(3) {
+      width: 120px;
+      height: 120px;
+      top: 40%;
+      right: 10%;
+      animation-delay: 4s;
+    }
+
+    @keyframes floatDot {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-20px) scale(1.05);
+      }
+    }
+
+    /* ── LOGOS HEADER ── */
+    .logos-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 24px 20px 10px;
+      animation: fadeDown 0.6s ease both;
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+
+    .logo-badge {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo-badge.elektra {
+      background: var(--elektra-yellow);
+    }
+
+    .logo-badge img {
+      max-height: 100%;
+      width: auto;
+      display: block;
+    }
+
+    .x-separator {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    /* ── HERO TEXT ── */
+    .hero-text {
+      padding: 5px 20px;
+      text-align: center;
+      animation: fadeUp 0.7s 0.3s ease both;
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+
+    .badge-exclusivo {
+      display: inline-block;
+      background: var(--elektra-red);
+      color: white;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 6px;
+    }
+
+    .hero-title {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 28px;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+
+    .hero-title span {
+      display: block;
+      font-size: 44px;
+      color: var(--elektra-yellow);
+      text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    }
+
+    .hero-sub {
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 13px;
+    }
+
+    /* ── VIDEO BOX ── */
+    .video-wrapper {
+      flex: 1;
+      /* Ocupa el espacio restante central disponible */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      position: relative;
+      z-index: 2;
+      min-height: 0;
+    }
+
+    .video-container {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(255, 215, 0, 0.3);
+      position: relative;
+      background: #000;
+      animation: fadeUp 0.7s 0.2s ease both;
+      display: flex;
+    }
+
+    .video-container video,
+    .video-container iframe {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .video-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #001f6e, #0033A0);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 14px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .video-placeholder svg {
+      width: 60px;
+      height: 60px;
+      fill: rgba(255, 215, 0, 0.3);
+    }
+
+    /* ── MUTE BUTTON ── */
+    .mute-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      backdrop-filter: blur(4px);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .mute-btn:hover {
+      background: rgba(0, 0, 0, 0.7);
+      transform: scale(1.05);
+    }
+
+    .mute-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+
+    /* ── BOTTOM CTA ── */
+    .bottom-section {
+      padding-bottom: env(safe-area-inset-bottom, 20px);
+      padding-top: 10px;
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+
+    .btn-cta {
+      display: block;
+      width: calc(100% - 40px);
+      margin: 0 20px;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, var(--elektra-yellow) 0%, #ffb800 100%);
+      color: var(--telcel-blue);
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.5px;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4), 0 4px 0 #c98d00;
+      transition: transform 0.15s, box-shadow 0.15s;
+      text-align: center;
+      animation: pulse 2s 1s ease infinite;
+    }
+
+    .btn-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(255, 215, 0, 0.5), 0 6px 0 #c98d00;
+    }
+
+    .btn-cta:active {
+      transform: translateY(2px);
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3), 0 2px 0 #c98d00;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4), 0 4px 0 #c98d00;
+      }
+
+      50% {
+        box-shadow: 0 8px 50px rgba(255, 215, 0, 0.7), 0 4px 0 #c98d00;
+      }
+    }
+
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 12px 20px 5px;
+      animation: fadeUp 0.7s 0.5s ease both;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 11px;
+    }
+
+    .trust-item svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--elektra-yellow);
+      opacity: 0.7;
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (min-width: 500px) {
+      .hero-title {
+        font-size: 32px;
+      }
+
+      .hero-title span {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app-container">
+    <div class="bg-dots">
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="logos-bar">
+      <div class="logo-badge telcel">
+        <img src="assets/Telcel_logo.svg.webp" alt="Telcel" />
+      </div>
+      <span class="x-separator">×</span>
+      <div class="logo-badge elektra">
+        <img src="assets/Elektra_Logo.webp" alt="Elektra" />
+      </div>
+    </div>
+
+    <div class="hero-text">
+      <span class="badge-exclusivo">⚡ Exclusivo Elektra</span>
+      <h1 class="hero-title">
+        ¡Recarga $50
+        <span>GRATIS!</span>
+      </h1>
+      <p class="hero-sub">Sin compras · Sin condiciones · Solo tu cupón</p>
+    </div>
+
+    <div class="video-wrapper">
+      <div class="video-container">
+        <video id="hero-video" src="assets/CUPONELEKTRA.mp4" autoplay muted loop playsinline></video>
+
+        <!-- Mute/Unmute Button -->
+        <button class="mute-btn" id="mute-btn" onclick="toggleMute()" aria-label="Activar sonido">
+          <!-- Muted UI -->
+          <svg id="icon-muted" viewBox="0 0 24 24">
+            <path
+              d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+          </svg>
+          <!-- Unmuted UI -->
+          <svg id="icon-unmuted" viewBox="0 0 24 24" style="display: none;">
+            <path
+              d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+          </svg>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="bottom-section">
+      <button class="btn-cta" onclick="window.location.href='pages/form.html'">
+        🎁 Obtener Recarga Gratis
+      </button>
+      <div class="trust-row">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7l-9-5z" />
+          </svg>
+          100% seguro
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Sin spam
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
+          </svg>
+          Gratis de verdad
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleMute() {
+      const video = document.getElementById('hero-video');
+      const iconMuted = document.getElementById('icon-muted');
+      const iconUnmuted = document.getElementById('icon-unmuted');
+
+      if (video.muted) {
+        video.muted = false;
+        iconMuted.style.display = 'none';
+        iconUnmuted.style.display = 'block';
+      } else {
+        video.muted = true;
+        iconMuted.style.display = 'block';
+        iconUnmuted.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+
+</html>

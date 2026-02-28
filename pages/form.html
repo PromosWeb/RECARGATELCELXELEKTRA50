@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Canje de Recarga — Telcel x Elektra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nunito:wght@400;600;700;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --telcel-blue: #0033A0;
+            --telcel-blue-light: #0055CC;
+            --elektra-yellow: #FFD700;
+            --elektra-red: #CC0000;
+            --white: #ffffff;
+            --gray-light: #f4f6fb;
+            --gray: #8a9ab5;
+            --success: #22c55e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(160deg, var(--telcel-blue) 0%, #001f6e 100%);
+            color: #1a1a2e;
+            overflow-x: hidden;
+            min-height: 100vh;
+            padding-top: 90px;
+        }
+
+        /* ── LOGOS HEADER ── */
+        .logos-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 24px 20px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+        }
+
+        .logo-badge {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-badge.elektra {
+            background: var(--elektra-yellow);
+        }
+
+        .logo-badge img {
+            max-height: 100%;
+            width: auto;
+            display: block;
+        }
+
+        .x-separator {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        /* ─── FORMULARIO SCREEN ─── */
+        .form-header {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .form-header h2 {
+            font-family: 'Black Han Sans', sans-serif;
+            color: white;
+            font-size: 24px;
+        }
+
+        .form-header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .form-body {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 10px 20px 40px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .form-input:focus {
+            border-color: var(--elektra-yellow);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-input option {
+            background: #001f6e;
+            color: white;
+        }
+
+        /* Recarga selector */
+        .recarga-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .recarga-option {
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .recarga-option:hover {
+            border-color: var(--elektra-yellow);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .recarga-option.selected {
+            border-color: var(--elektra-yellow);
+            background: rgba(255, 215, 0, 0.15);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+
+        .recarga-amount {
+            font-family: 'Black Han Sans', sans-serif;
+            font-size: 20px;
+            color: var(--elektra-yellow);
+        }
+
+        .recarga-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2px;
+        }
+
+        .recarga-badge {
+            display: inline-block;
+            background: var(--elektra-red);
+            color: white;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-top: 3px;
+        }
+
+        /* Código input */
+        .code-input-wrap {
+            position: relative;
+        }
+
+        .form-input.code-input {
+            font-family: 'Black Han Sans', sans-serif;
+            font-size: 17px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding-right: 50px;
+        }
+
+        .code-check {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .code-check.show {
+            opacity: 1;
+        }
+
+        .code-hint {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 6px;
+        }
+
+        .code-hint strong {
+            color: var(--elektra-yellow);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--elektra-yellow), #ffb800);
+            color: var(--telcel-blue);
+            font-family: 'Black Han Sans', sans-serif;
+            font-size: 19px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.35), 0 4px 0 #c98d00;
+            transition: transform 0.15s;
+            margin-top: 8px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-msg {
+            background: rgba(204, 0, 0, 0.2);
+            border: 1px solid rgba(204, 0, 0, 0.4);
+            color: #ff8080;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .error-msg.show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Logos Global Header -->
+    <div class="logos-bar">
+        <div class="logo-badge telcel">
+            <img src="../assets/Telcel_logo.svg.webp" alt="Telcel" />
+        </div>
+        <span class="x-separator">×</span>
+        <div class="logo-badge elektra">
+            <img src="../assets/Elektra_Logo.webp" alt="Elektra" />
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+     SECCIÓN 1: FORMULARIO
+══════════════════════════════════════ -->
+    <div class="form-header">
+        <h2>🎁 Reclama tu Recarga</h2>
+        <p>Llena tus datos para continuar</p>
+    </div>
+
+    <div class="form-body">
+        <div id="form-error" class="error-msg">
+            ⚠️ Por favor completa todos los campos correctamente.
+        </div>
+
+        <!-- Nombre -->
+        <div class="form-group">
+            <label class="form-label">👤 Nombre completo</label>
+            <input type="text" id="input-nombre" class="form-input" placeholder="Ej. María González López" />
+        </div>
+
+        <!-- Teléfono -->
+        <div class="form-group">
+            <label class="form-label">📱 Número Telcel a recargar</label>
+            <input type="tel" id="input-telefono" class="form-input" placeholder="10 dígitos" maxlength="10" />
+        </div>
+
+        <!-- Seleccionar recarga -->
+        <div class="form-group">
+            <label class="form-label">💰 Selecciona la cantidad de tu recarga</label>
+            <div class="recarga-grid">
+                <div class="recarga-option" onclick="selectRecarga(this, '20')">
+                    <div class="recarga-amount">$20</div>
+                    <div class="recarga-label">Básica</div>
+                </div>
+                <div class="recarga-option" onclick="selectRecarga(this, '30')">
+                    <div class="recarga-amount">$30</div>
+                    <div class="recarga-label">Popular</div>
+                </div>
+                <div class="recarga-option selected" onclick="selectRecarga(this, '50')">
+                    <div class="recarga-amount">$50</div>
+                    <div class="recarga-label">Promo</div>
+                    <div class="recarga-badge">GRATIS</div>
+                </div>
+                <div class="recarga-option" onclick="selectRecarga(this, '100')">
+                    <div class="recarga-amount">$100</div>
+                    <div class="recarga-label">Plus</div>
+                </div>
+                <div class="recarga-option" onclick="selectRecarga(this, '150')">
+                    <div class="recarga-amount">$150</div>
+                    <div class="recarga-label">Max</div>
+                </div>
+                <div class="recarga-option" onclick="selectRecarga(this, '200')">
+                    <div class="recarga-amount">$200</div>
+                    <div class="recarga-label">Premium</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Código cupón -->
+        <div class="form-group">
+            <label class="form-label">🏷️ Ingresa tu código de cupón</label>
+            <div class="code-input-wrap">
+                <input type="text" id="input-codigo" class="form-input code-input" placeholder="TELCEL-ELEKTRA50"
+                    maxlength="20" oninput="checkCode(this)" />
+                <svg class="code-check" id="code-check-icon" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" fill="#22c55e" />
+                    <path d="M8 12l3 3 5-5" stroke="white" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+            <p class="code-hint">El código está en tu flyer: <strong>TELCEL-ELEKTRA50</strong></p>
+        </div>
+
+        <button class="btn-submit" onclick="submitForm()">
+            Continuar →
+        </button>
+    </div>
+
+    <script>
+        let selectedRecarga = '50';
+
+        function selectRecarga(el, amount) {
+            document.querySelectorAll('.recarga-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedRecarga = amount;
+        }
+
+        const VALID_CODE = 'TELCEL-ELEKTRA50';
+        function checkCode(input) {
+            const icon = document.getElementById('code-check-icon');
+            const val = input.value.toUpperCase().trim();
+            if (val === VALID_CODE) {
+                icon.classList.add('show');
+            } else {
+                icon.classList.remove('show');
+            }
+        }
+
+        function submitForm() {
+            const nombre = document.getElementById('input-nombre').value.trim();
+            const telefono = document.getElementById('input-telefono').value.trim();
+            const codigo = document.getElementById('input-codigo').value.toUpperCase().trim();
+            const errEl = document.getElementById('form-error');
+
+            if (!nombre || nombre.length < 3) {
+                errEl.textContent = '⚠️ Ingresa tu nombre completo.';
+                errEl.classList.add('show'); return;
+            }
+            if (telefono.length !== 10 || !/^\d+$/.test(telefono)) {
+                errEl.textContent = '⚠️ Ingresa un número de 10 dígitos.';
+                errEl.classList.add('show'); return;
+            }
+            if (codigo !== VALID_CODE) {
+                errEl.textContent = '❌ Código incorrecto. Revisa tu flyer.';
+                errEl.classList.add('show'); return;
+            }
+            errEl.classList.remove('show');
+
+            // Redirigir a la siguiente página
+            window.location.href = 'captcha.html';
+        }
+    </script>
+</body>
+
+</html>
